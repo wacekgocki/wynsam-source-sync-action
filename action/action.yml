@@ -47,7 +47,7 @@ runs:
 
     - name: Run sync script
       shell: bash
-      run: "${{ github.action_path }}/release-sync.sh"
+      run: bash "${{ github.action_path }}/release-sync.sh"
       env:
         TARGET_REPO: ${{ inputs.target_repo }}
         TARGET_BRANCH: ${{ inputs.target_branch }}
