@@ -1,0 +1,58 @@
+name: 'Release Sync'
+description: 'Copies a filtered snapshot of the current branch to a target repo/branch (no shared history) and tags it with a version read from an env file.'
+
+inputs:
+  target_repo:
+    description: 'SSH clone URL of the target repo, e.g. git@github.com:customer-org/repo-name.git'
+    required: true
+  target_branch:
+    description: 'Branch on the target repo to publish to'
+    required: false
+    default: main
+  ignore_file:
+    description: 'Path (relative to repo root) to the exclude-list file'
+    required: false
+    default: .syncignore
+  env_file:
+    description: 'Path to the file containing the version key'
+    required: false
+    default: .env
+  version_key:
+    description: 'Key inside env_file holding the release version'
+    required: false
+    default: APP_VERSION
+  bot_name:
+    required: false
+    default: release-sync-bot
+  bot_email:
+    required: false
+    default: release-sync-bot@users.noreply.github.com
+  deploy_key:
+    description: 'Private SSH deploy key for target_repo (pass from a secret)'
+    required: true
+
+runs:
+  using: composite
+  steps:
+    - name: Set up deploy key
+      uses: webfactory/ssh-agent@v0.9.0
+      with:
+        ssh-private-key: ${{ inputs.deploy_key }}
+
+    - name: Trust github.com host key
+      shell: bash
+      run: |
+        mkdir -p ~/.ssh
+        ssh-keyscan -H github.com >> ~/.ssh/known_hosts 2>/dev/null
+
+    - name: Run sync script
+      shell: bash
+      run: "${{ github.action_path }}/release-sync.sh"
+      env:
+        TARGET_REPO: ${{ inputs.target_repo }}
+        TARGET_BRANCH: ${{ inputs.target_branch }}
+        IGNORE_FILE: ${{ inputs.ignore_file }}
+        ENV_FILE: ${{ inputs.env_file }}
+        VERSION_KEY: ${{ inputs.version_key }}
+        BOT_NAME: ${{ inputs.bot_name }}
+        BOT_EMAIL: ${{ inputs.bot_email }}

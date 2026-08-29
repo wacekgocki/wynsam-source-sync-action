@@ -1,0 +1,9 @@
+# rsync --exclude-from patterns (similar to but not identical to .gitignore syntax).
+# One pattern per line. Add anything that must never reach the customer repo.
+
+.github/
+.syncignore
+CLAUDE.md
+docs/internal/
+*.local.env
+tests/
