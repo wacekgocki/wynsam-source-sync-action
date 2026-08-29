@@ -21,7 +21,12 @@ every additional repo pair.
 
 ## 0. One-time setup
 
-1. Create `your-org/release-sync-action` (can be private, your own account/org).
+1. Create `your-org/release-sync-action` as a public repository. This is
+   required when the caller workflow uses the action by reference, e.g.
+   `uses: your-org/release-sync-action@v1`; GitHub Actions cannot fetch a
+   private repository from a personal account this way. If you need it
+   private, use a different setup pattern instead of a direct `uses:`
+   reference.
 2. Copy `action/action.yml` and `action/release-sync.sh` into it, commit,
    push, then tag a release: `git tag v1 && git push origin v1`. Caller
    workflows reference `your-org/release-sync-action@v1`.

@@ -1,10 +1,10 @@
-# Wynsam Source Sync
+# Wynsam Source Sync Action
 
 Automated GitHub Action tooling to synchronize filtered release snapshots from a source repository to a target customer repository without sharing internal git history.
 
 ## Overview
 
-Wynsam Source Sync extracts a clean release snapshot from a source repository branch (e.g., `release`), filters out internal or sensitive files using rules defined in [.syncignore](.syncignore), extracts the version string from a configuration file, tags the release (`vX.Y.Z`), and pushes the snapshot to a target repository branch (`main`).
+Action extracts a clean release snapshot from a source repository branch (e.g., `release`), filters out internal or sensitive files using rules defined in [.syncignore](.syncignore), extracts the version string from a configuration file, tags the release (`vX.Y.Z`), and pushes the snapshot to a target repository branch (`main`).
 
 ## Key Features
 
@@ -33,6 +33,10 @@ Wynsam Source Sync extracts a clean release snapshot from a source repository br
 | `version_key` | Key name holding version string | No | `APP_VERSION` |
 | `bot_name` | Git commit author name | No | `release-sync-bot` |
 | `bot_email` | Git commit author email | No | `release-sync-bot@users.noreply.github.com` |
+
+## Important Note
+
+The repository that contains this action must be public when you reference it as `uses: your-org/release-sync-action@v1`. GitHub Actions cannot use a private personal-account repository this way, and a private repo requires a different setup pattern.
 
 ## Quick Start
 

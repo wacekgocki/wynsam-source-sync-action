@@ -1,5 +1,6 @@
 # Place at: .github/workflows/release-sync.yml in each source repo.
 # Fill in target_repo for that repo, and add the RELEASE_SYNC_DEPLOY_KEY secret.
+# Update your-org/release-sync-action@v1 to point to the correct tag
 name: Release Sync
 
 on:
@@ -10,7 +11,7 @@ jobs:
   sync:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
 
       - name: Sync release to customer repo
         uses: your-org/release-sync-action@v1
