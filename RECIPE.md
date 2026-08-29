@@ -12,9 +12,9 @@ every additional repo pair.
   lives. (Files: `action/action.yml`, `action/release-sync.sh`.)
 - **A caller workflow** in each source repo, `.github/workflows/release-sync.yml`,
   a few lines that just point at the shared action. (File:
-  `per-repo-template/release-sync.yml`.)
+  `release-sync.yml`.)
 - **A `.syncignore`** file in each source repo listing what never leaves it.
-  (File: `per-repo-template/.syncignore`.)
+  (File: `.syncignore`.)
 - **One SSH deploy keypair per repo pair** — never reused across repos.
 
 ---
@@ -56,11 +56,11 @@ every additional repo pair.
 
 ### B. On your side (the source repo being copied from)
 
-1. Copy `per-repo-template/.syncignore` into the repo root and edit it —
+1. Copy `.syncignore` into the repo root and edit it —
    list every file/dir that must not reach the customer.
 2. Confirm `.env` at repo root has `APP_VERSION=x.y.z` (or pass different
    `env_file` / `version_key` inputs if it's named/located differently).
-3. Copy `per-repo-template/release-sync.yml` to
+3. Copy `release-sync.yml` to
    `.github/workflows/release-sync.yml`, and set `target_repo` to this
    repo's customer URL from A.5.
 4. Add the secret: repo Settings → Secrets and variables → Actions → New

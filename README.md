@@ -4,22 +4,22 @@ Automated GitHub Action tooling to synchronize filtered release snapshots from a
 
 ## Overview
 
-Wynsam Source Sync extracts a clean release snapshot from a source repository branch (e.g., `release`), filters out internal or sensitive files using rules defined in [wynsam-source-sync/.syncignore](wynsam-source-sync/.syncignore), extracts the version string from a configuration file, tags the release (`vX.Y.Z`), and pushes the snapshot to a target repository branch (`main`).
+Wynsam Source Sync extracts a clean release snapshot from a source repository branch (e.g., `release`), filters out internal or sensitive files using rules defined in [.syncignore](.syncignore), extracts the version string from a configuration file, tags the release (`vX.Y.Z`), and pushes the snapshot to a target repository branch (`main`).
 
 ## Key Features
 
-- **Filtered Sync**: Excludes internal directories, tests, and configuration files via `rsync` rules in [wynsam-source-sync/.syncignore](wynsam-source-sync/.syncignore).
+- **Filtered Sync**: Excludes internal directories, tests, and configuration files via `rsync` rules in [.syncignore](.syncignore).
 - **Automatic Tagging**: Resolves release version from `APP_VERSION` in the environment file and tags target releases (`vX.Y.Z`).
 - **History Isolation**: Keeps customer repositories clean and isolated from internal commit history while preserving target repository commit history.
 - **Secure Authentication**: Uses dedicated SSH deploy keypairs per repository pair.
 
 ## Repository Contents
 
-- [wynsam-source-sync/action/action.yml](wynsam-source-sync/action/action.yml): Composite GitHub Action definition.
-- [wynsam-source-sync/action/release-sync.sh](wynsam-source-sync/action/release-sync.sh): Synchronization script handling snapshotting, rsync filtering, and git operations.
-- [wynsam-source-sync/release-sync.yml](wynsam-source-sync/release-sync.yml): Example workflow template for source repositories.
-- [wynsam-source-sync/.syncignore](wynsam-source-sync/.syncignore): Exclude-list template for snapshot filtering.
-- [wynsam-source-sync/RECIPE.md](wynsam-source-sync/RECIPE.md): Complete setup and operational recipe.
+- [action/action.yml](action/action.yml): Composite GitHub Action definition.
+- [action/release-sync.sh](action/release-sync.sh): Synchronization script handling snapshotting, rsync filtering, and git operations.
+- [release-sync.yml](release-sync.yml): Example workflow template for source repositories.
+- [.syncignore](.syncignore): Exclude-list template for snapshot filtering.
+- [RECIPE.md](RECIPE.md): Complete setup and operational recipe.
 
 ## Action Inputs
 
@@ -58,4 +58,4 @@ jobs:
           deploy_key: ${{ secrets.RELEASE_SYNC_DEPLOY_KEY }}
 ```
 
-Refer to [wynsam-source-sync/RECIPE.md](wynsam-source-sync/RECIPE.md) for full setup instructions, deploy key generation, and notification setup.
+Refer to [RECIPE.md](RECIPE.md) for full setup instructions, deploy key generation, and notification setup.
